@@ -1,0 +1,74 @@
+<!DOCTYPE html >
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="application/xhtml+xml; charset=utf-8" />
+	
+	<link rel='shortcut icon' type='image/png' href='./img/favicon.png'/>
+
+	<link href="https://fonts.googleapis.com/css?family=Fira+Mono|Ubuntu+Mono&display=swap" rel="stylesheet"/>
+
+	<!--<script type="text/javascript" src=""></script> -->
+	
+	<link rel="stylesheet" type="text/css" href="./CSS/slider.css">
+	<!--<link rel="stylesheet" type="text/css" href="/static/blog/css/main.css">-->
+	<script type='text/javascript' src='./js/jquery-3.4.1.min.js'></script>
+	<script type="text/javascript" src="./js/sliders.js"></script>
+
+
+    <title>Experiment</title>
+
+</head>
+<body>
+<div id="topbar"></div>
+
+<div id="header">
+	<h1>Sliders Game</h1>
+	
+	<ul> 
+		<li><a href='./index.html' > Home </a></li>
+		<li><a href='#' > Research </a></li>
+		<li><a href='./experiment.html' > Experiment </a></li>
+	</ul>
+
+</div>
+<div class="colmask leftmenu">
+	<div class="colleft">
+		<div class="col1">
+			<!-- Column 1 start -->
+		<h1>Sliders</h1>
+
+		<div class='slider_container'>
+			<div class="range_slider">
+			  <input type="range" min="-100" max="100" value="50" class="slider" id="slider1">
+			  <span class="slider_value" id='slider1_v'>0</span>
+			</div>
+
+			<div class="range_slider">
+			  <input type="range" min="-100" max="100" value="50" class="slider" id="slider2">
+			  <span class="slider_value" id='slider2_v'>0</span>
+			</div>
+
+			<div class="range_slider">
+			  <input type="range" min="-100" max="100" value="50" class="slider" id="slider3">
+			  <span class="slider_value" id='slider3_v'>0</span>
+			</div> 
+		</div>
+
+		<button class='process' id='start_button'>Start</button>
+		<button class='process' id='stop_button'>Stop</button>
+		
+		<!-- Column 1 end -->
+		</div>
+		<div class="col2">
+			<!-- Column 2 start -->
+
+			<!-- Column 2 end -->
+		</div>
+	</div>
+</div>
+<div id="footer">
+</div>
+
+
+</body>
+</html>
