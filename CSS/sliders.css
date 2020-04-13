@@ -1,0 +1,54 @@
+@font-face {
+    font-family: linowrite;
+    src: url("../fonts/linowrite.ttf");
+  }
+  @font-face {
+    font-family: bellerose;
+    src: url("../fonts/Bellerose.ttf");
+  }
+  html {
+  font-family: 'Fira Mono', 'Ubuntu Mono', monospace;
+  }
+  
+  .colleft {
+    margin: 2%;
+  }
+  
+  .slider_container {
+    margin: 2%;
+    padding: 2%;
+    width: 50%;
+    height: 350px;
+    display: flex;
+    flex-wrap: wrap;
+    align-content: center;
+    justify-content: center;
+  }
+
+  .slider_box {
+    width: 50%;
+    height: 50%;
+    display: flex;
+    align-content: center;
+    justify-content: center;
+  }
+
+  #slider_container_1 {
+  }
+  #slider_container_2 {
+  }
+  #slider_container_3 {
+  }
+
+  .slider {
+      height: 100%;
+  }
+
+  #custom-handle-1, #custom-handle-2, #custom-handle-3 {
+    width: 3em;
+    height: 1.6em;
+    left: -150%;
+    margin-top: -.8em;
+    text-align: center;
+    line-height: 1.6em;
+  }

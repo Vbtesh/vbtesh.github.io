@@ -9,11 +9,12 @@
 
 	<!--<script type="text/javascript" src=""></script> -->
 	
-	<link rel="stylesheet" type="text/css" href="./CSS/slider.css">
+	<link rel="stylesheet" type='text/css' href='./node_modules/jquery.ui/jquery-ui.min.css'>
+	<link rel="stylesheet" type="text/css" href="./CSS/sliders.css">
 	<!--<link rel="stylesheet" type="text/css" href="/static/blog/css/main.css">-->
-	<script type='text/javascript' src='./js/jquery-3.4.1.min.js'></script>
-	<script type="text/javascript" src="./js/sliders.js"></script>
-
+	<script src='./js/jquery-3.4.1.min.js'></script>
+	<script src='./node_modules/jquery.ui/jquery-ui.min.js'></script>
+	<script src="./js/slider.js"></script>
 
     <title>Experiment</title>
 
@@ -38,22 +39,23 @@
 		<h1>Sliders</h1>
 
 		<div class='slider_container'>
-			<div class="range_slider">
-			  <input type="range" min="-100" max="100" value="50" class="slider" id="slider1">
-			  <span class="slider_value" id='slider1_v'>0</span>
+		<div class='slider_box' id='slider_container_1'>
+			<div class="slider" id='slider1'>
+				<div id="custom-handle-1" class="ui-slider-handle"></div>
 			</div>
-
-			<div class="range_slider">
-			  <input type="range" min="-100" max="100" value="50" class="slider" id="slider2">
-			  <span class="slider_value" id='slider2_v'>0</span>
-			</div>
-
-			<div class="range_slider">
-			  <input type="range" min="-100" max="100" value="50" class="slider" id="slider3">
-			  <span class="slider_value" id='slider3_v'>0</span>
-			</div> 
 		</div>
-
+		<div class='slider_box' id='slider_container_2'>
+			<div class="slider" id='slider2'>
+				<div id="custom-handle-2" class="ui-slider-handle"></div>
+			</div>
+		</div>
+		<div class='slider_box' id='slider_container_3'>
+			<div class="slider" id='slider3'>
+				<div id="custom-handle-3" class="ui-slider-handle"></div>
+			</div>
+		</div>
+		</div>
+		
 		<button class='process' id='start_button'>Start</button>
 		<button class='process' id='stop_button'>Stop</button>
 		
