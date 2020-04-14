@@ -7,14 +7,19 @@
 
 	<link href="https://fonts.googleapis.com/css?family=Fira+Mono|Ubuntu+Mono&display=swap" rel="stylesheet"/>
 
-	<!--<script type="text/javascript" src=""></script> -->
 	
+	<!-- CSS Files -->
 	<link rel="stylesheet" type='text/css' href='./node_modules/jquery.ui/jquery-ui.min.css'>
 	<link rel="stylesheet" type="text/css" href="./CSS/sliders.css">
-	<!--<link rel="stylesheet" type="text/css" href="/static/blog/css/main.css">-->
+
+	<!-- Javascript Files -->
+	<!-- UI and logic scripts -->
 	<script src='./js/jquery-3.4.1.min.js'></script>
 	<script src='./node_modules/jquery.ui/jquery-ui.min.js'></script>
 	<script src="./js/slider.js"></script>
+	<!-- Chart.js and plot logic -->
+	<script src='https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js'></script>
+	<!--<script src="./js/progressPlot.js"></script>-->
 
     <title>Experiment</title>
 
@@ -24,40 +29,95 @@
 
 <div id="header">
 	<h1>Sliders Game</h1>
-	
-	<ul> 
-		<li><a href='./index.html' > Home </a></li>
-		<li><a href='#' > Research </a></li>
-		<li><a href='./experiment.html' > Experiment </a></li>
-	</ul>
-
 </div>
 <div class="colmask leftmenu">
 	<div class="colleft">
 		<div class="col1">
-			<!-- Column 1 start -->
-		<h1>Sliders</h1>
+		<!-- Column 1 start -->
 
-		<div class='slider_container'>
-		<div class='slider_box' id='slider_container_1'>
-			<div class="slider" id='slider1'>
-				<div id="custom-handle-1" class="ui-slider-handle"></div>
+		<div class='game_display'>
+			<!-- Sliders display -->
+			<div class='slider_container'>
+				<div class='slider_box' id='slider_container_1'>
+					<div class="slider" id='slider_X'>
+						<div id="custom-handle-1" class="ui-slider-handle"></div>
+					</div>
+				</div>
+				<div class='slider_box' id='slider_container_2'>
+					<div class="slider" id='slider_Y'>
+						<div id="custom-handle-2" class="ui-slider-handle"></div>
+					</div>
+				</div>
+				<div class='slider_box' id='slider_container_3'>
+					<div class="slider" id='slider_Z'>
+						<div id="custom-handle-3" class="ui-slider-handle"></div>
+					</div>
+				</div>
 			</div>
-		</div>
-		<div class='slider_box' id='slider_container_2'>
-			<div class="slider" id='slider2'>
-				<div id="custom-handle-2" class="ui-slider-handle"></div>
+			<!-- Chart display -->
+			<div class='chart_container'>
+				<canvas id='progressPlot'>
+				</canvas>
 			</div>
-		</div>
-		<div class='slider_box' id='slider_container_3'>
-			<div class="slider" id='slider3'>
-				<div id="custom-handle-3" class="ui-slider-handle"></div>
-			</div>
-		</div>
 		</div>
 		
-		<button class='process' id='start_button'>Start</button>
-		<button class='process' id='stop_button'>Stop</button>
+		<div class='button_container'>
+			<button class='process' id='start_button'>Start</button>
+			<button class='process' id='stop_button'>Stop</button>
+			<button class='process' id='reset_button'>Reset</button>
+		</div>
+
+		<div class='parameter_container'>
+			<div class='spinner_container'>
+				<label for = "theta-spinner"><strong>&theta;</strong>: </label>
+				<input id='theta-spinner' class='selector' type='text' value='0.2'/>
+			</div>
+		</div>
+
+		<div class='flex_table'>
+			<div class='flex_table_row'>
+				<div class='flex_table_head'>Var
+				</div>
+				<div class='flex_table_head'>X
+				</div>
+				<div class='flex_table_head'>Y
+				</div>
+				<div class='flex_table_head'>Z
+				</div>
+			</div>
+			<div class='flex_table_row'>
+				<div class='flex_table_head'>X
+				</div>
+				<div class='flex_table_cell'>\
+				</div>
+				<div class='flex_table_cell'><input class='coef_input' type="text" id="X_1" value='0'>
+				</div>
+				<div class='flex_table_cell'><input class='coef_input' type="text" id="X_2" value='0'>
+				</div>
+			</div>
+			<div class='flex_table_row'>
+				<div class='flex_table_head'>Y
+				</div>
+				<div class='flex_table_cell'><input class='coef_input' type="text" id="Y_0" value='0'>
+				</div>
+				<div class='flex_table_cell'>\
+				</div>
+				<div class='flex_table_cell'><input class='coef_input' type="text" id="Y_2" value='0'>
+				</div>
+			</div>
+			<div class='flex_table_row'>
+				<div class='flex_table_head'>Z
+				</div>
+				<div class='flex_table_cell'><input class='coef_input' type="text" id="Z_0" value='0'>
+				</div>
+				<div class='flex_table_cell'><input class='coef_input' type="text" id="Z_1" value='0'>
+				</div>
+				<div class='flex_table_cell'>\
+				</div>
+			</div>
+		</div>
+	
+
 		
 		<!-- Column 1 end -->
 		</div>
