@@ -3,11 +3,12 @@
 // Logic variables
 var xclicked = yclicked = zclicked = false;
 var interval;
-var time_step = 200;
+var time_step = 100;
 var x = 0;
 var y = 0;
 var z = 0;
 var count_step = 0;
+var display = true;
 
 // Ou Network computation variables
 var dt = time_step/1000;
@@ -28,9 +29,16 @@ var zInter = [0];
 var steps = [0];
 
 var chart;
+var chart2;
 var xPlot = [0];
 var yPlot = [0];
 var zPlot = [0];
+var xColour = 'rgb(51, 153, 255)';
+var yColour = 'rgb(255, 102, 102)';
+var zColour = 'rgb(0, 204, 102)';
+var xShade = 'rgb(204, 229, 255)';
+var yShade = 'rgb(255, 204, 204)';
+var zShade = 'rgb(204, 255, 229)';
 
 
 // --- Global function run at page load --- //
@@ -59,8 +67,23 @@ function setupInterface() {
             ouNetwork();
             var new_step = round(parseFloat(steps[steps.length - 1] + time_step / 1000), 2)
             record(x, y, z, xclicked, yclicked, zclicked, new_step);
-            if (count_step % 20 == 0) {
-                addData(chart, new_step, [x, y, z]);
+            if (count_step % 10 == 0) {
+                if (xclicked == true) {
+                    addData(chart, new_step, [x, y, z, 100, NaN, NaN]);
+                    //addShade(chart, new_step, [x, y, z, 100], [0, 1, 2, 3]);
+                } else if (yclicked == true) {
+                    addData(chart, new_step, [x, y, z, NaN, 100, NaN]);
+                    //addShade(chart, new_step, [x, y, z, 100], [0, 1, 2, 4]);
+                } else if (zclicked == true) {
+                    addData(chart, new_step, [x, y, z, NaN, NaN, 100]);
+                    //addShade(chart, new_step, [x, y, z, 100], [0, 1, 2, 5]);
+                } else {
+                    addData(chart, new_step, [x, y, z, NaN, NaN, NaN]);
+                }
+                // Remove data if too much is plotted here max datapoints is 100
+                if (chart.data.datasets[0].data.length > 200) {
+                    removeData(chart);
+                }
             }
             //console.log(x);
         }, time_step)
@@ -79,6 +102,7 @@ function setupInterface() {
         clearInterval(interval);
         $('.coef_input').prop("disabled", false);
         $('.slider').slider("value", 0);
+        setupChart();
     })
 
     // Sets up the theta parameter spinner
@@ -164,23 +188,36 @@ function record(x, y, z, int_x, int_y, int_z, new_step) {
     xHist.push(x);
     yHist.push(y);
     zHist.push(z);
-
     xInter.push(+ int_x);
     yInter.push(+ int_y);
     zInter.push(+ int_z);
-
     steps.push(new_step);
 }
 
 
 // --- Canvas and Plot Code --- //
+
 function addData(chart, label, data) {
-    chart.data.labels.push(label);
-    var index = 0;
-    chart.data.datasets.forEach((dataset) => {
-        console.log(index);
+    chart.data.labels.push(round(label, 1));
+    chart.data.datasets.forEach((dataset, index) => {
+        //console.log(index);
         dataset.data.push(data[index]);
-        index ++;
+    });
+    chart.update();
+}
+
+function addShade(chart, label, data, indices) {
+    chart.data.labels.push(round(label, 0));
+    for (i=0; i<indices.length; i++) {
+        chart.data.datasets[indices[i]].data.push(data[i]);
+    }
+    chart.update();
+}
+
+function removeData(chart) {
+    chart.data.labels.shift();
+    chart.data.datasets.forEach((dataset) => {
+        dataset.data.shift();
     });
     chart.update();
 }
@@ -196,26 +233,50 @@ function setupChart() {
             labels: [0],
             datasets: [{
                 label: 'X',
-                borderColor: 'rgb(255, 99, 132)',
+                borderColor: xColour,
                 data: [0],
-                fill: false,
+                fill: false
             }, {
                 label: 'Y',
-                borderColor: 'rgb(100, 149, 237)',
+                borderColor: yColour,
                 data: [0],
                 fill: false, 
             }, {
                 label: 'Z',
-                borderColor: 'rgb(23, 164, 23)',
+                borderColor: zColour,
                 data: [0],
                 fill: false,
+            }, {
+                label: 'X Intervention',
+                data: [0],
+                borderColor: xShade,
+                backgroundColor: xShade,
+                fill: 'start',
+            }, {
+                label: 'Y Intervention',
+                data: [0],
+                borderColor: yShade,
+                backgroundColor: yShade,
+                fill: 'start',
+            }, {
+                label: 'Z Intervention',
+                data: [0],
+                borderColor: zShade,
+                backgroundColor: zShade,
+                fill: 'start',
             }]
         },
         xAxisID: 'Time',
         yAxisID: 'Value',
 
         // Configuration options go here
-        options: {}
+        options: {
+            elements: {
+                point:{
+                    radius: 0
+                }
+            }
+        }
     });
 }
 
@@ -268,6 +329,12 @@ function setupSliders() {
             z = parseInt($('#slider_Z').slider("value"));
         }
     })
+
+    if (display == true) {
+        $('#x_label').css('color', xColour);
+        $('#y_label').css('color', yColour);
+        $('#z_label').css('color', zColour);
+    }
 
     var $sliders = $('.slider');
     

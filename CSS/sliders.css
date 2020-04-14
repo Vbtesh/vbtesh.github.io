@@ -40,6 +40,11 @@
     display: flex;
     align-content: center;
     justify-content: center;
+    vertical-align: baseline;
+  }
+
+  .slider-label {
+      margin: auto 10% auto 5%;
   }
 
   .slider {
@@ -80,6 +85,7 @@
     flex-wrap: nowrap;
   }
   label {
+    font-weight: bold;
     padding-top: 2px;
     font-size: 15pt;
     text-align: right;
