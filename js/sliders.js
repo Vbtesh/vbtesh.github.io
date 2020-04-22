@@ -14,9 +14,9 @@ var display = true;
 var dt = time_step/1000;
 var theta = 0.5;
 var causes = {
-    'X': [0,0,0],
-    'Y': [1,0,0],
-    'Z': [0,-1,0]
+    'X': [1,0,1],
+    'Y': [1,1,0],
+    'Z': [0,-1,1]
 }
 
 // Data storage variables
@@ -40,6 +40,28 @@ var xShade = 'rgb(204, 229, 255)';
 var yShade = 'rgb(255, 204, 204)';
 var zShade = 'rgb(204, 255, 229)';
 
+var presets = {
+    'sin': [1, 0, 1, 
+            1, 1, 0, 
+            0, -1, 1, 
+            'X', 'Y', 'Z'],
+    'virus': [1, 0.8, 0.2,
+              0, 1, 0, 
+              0.2, -0.8, 1, 
+              'Positive tests', 'Infected cases', 'Negative tests'],
+    'crime': [1, -1, 0,
+              1, 1, 0, 
+              -0.5, -0.5, 1, 
+              'Crime rate', 'Police action', 'Population satisfaction'],
+    'finance': [1, -0.5, -1,
+                0, 1, -1,
+                -0.5, 1, 1, 
+                'Stock Prices', 'Covid-19 cases', 'Confinement measures'],
+    'virus-2': [1, -0.5, -1,
+                0, 1, -1,
+                0.5, 1, 1, 
+                'Stock Prices', 'Covid-19 cases', 'Confinement measures']
+}
 
 // --- Global function run at page load --- //
 
@@ -62,7 +84,9 @@ function setupInterface() {
     // Main game loop is here
     $('#start_button').click(function () {
         console.log('Game began');
-        $('.coef_input').prop("disabled", true);
+        $('.coef_input').spinner( "option", "disabled", true);
+        $('.condition_selector').checkboxradio( "option", "disabled", true);
+        $('#preset_selector').selectmenu( "option", "disabled", true);
         interval = setInterval(function() {
             ouNetwork();
             var new_step = round(parseFloat(steps[steps.length - 1] + time_step / 1000), 2)
@@ -93,21 +117,27 @@ function setupInterface() {
     $('#stop_button').click(function () {
         console.log('Game paused');
         clearInterval(interval);
-        $('.coef_input').prop("disabled", false);
+        $('.coef_input').spinner( "option", "disabled", false);
+        $('.condition_selector').checkboxradio( "option", "disabled", false);
+        $('#preset_selector').selectmenu( "option", "disabled", false);
     })
 
     // Setup the reset button to stop the game and reset values to 0.
     $('#reset_button').click(function () {
         console.log('Game reset');
         clearInterval(interval);
-        $('.coef_input').prop("disabled", false);
+        $('.coef_input').spinner( "option", "disabled", false);
+        $('.condition_selector').checkboxradio( "option", "disabled", false);
+        $('#preset_selector').selectmenu( "option", "disabled", false);
         $('.slider').slider("value", 0);
         setupChart();
     })
 
+    $('button').button();
+
     // Sets up the theta parameter spinner
     $('#theta-spinner').prop('disabled', true);
-    var $spinner = $('.selector');
+    var $spinner = $('.theta_spinner');
     $spinner.spinner({
         min: 0, 
         max: 10,
@@ -119,22 +149,67 @@ function setupInterface() {
     }).width(30);
     $spinner.spinner('value', theta);
 
+    // Setup of preset selector
+    $( ".selector" ).selectmenu({
+        appendTo: ".selector_container",
+        select: function(event, ui) {
+            console.log(ui.item.value)
+            updateModel(ui.item.value);
+        }
+      }).selectmenu( "menuWidget" ).addClass( "overflow" );
+
+    // Setup of condition radio
+    $('input[type="radio"]').checkboxradio();
+
     // Setup coefficient values based on the causes dictionary
+    $('.coef_input').spinner({
+        min: -10, 
+        max: 10,
+        step: 0.1
+    });
     $('.coef_input').each(function(index, element) {
         var $coef = $(element);
 
         var V = $coef.attr('id').slice(0, 1);
-        var idx = parseInt($coef.attr('id').slice(-1));
+        var idx = parseFloat($coef.attr('id').slice(-1));
+        $coef.spinner('value', causes[V][idx]);
 
-        $coef.val(causes[V][idx]);
-
-        $coef.change(function () {
-            causes[V][idx] = parseInt($coef.val());
-            //console.log(causes[V][idx]);
-            //console.log(causes);
+        $coef.spinner({
+            stop: function () {
+                causes[V][idx] = parseFloat($coef.spinner('value'));
+                //console.log(causes[V][idx]);
+                //console.log(causes);
+                console.log($coef.spinner('value'))
+            }
         })
     })
 }
+
+// Updates the values of the input table with the selects preset 
+function updateModel(preset) {
+    var presetValues = presets[preset];
+    causes['X'] = presetValues.slice(0, 3);
+    causes['Y'] = presetValues.slice(3, 6);
+    causes['Z'] = presetValues.slice(6, 9);
+    var presetLabels = presetValues.slice(9);
+
+    $('#x_label').html(presetLabels[0]);
+    $('#y_label').html(presetLabels[1]);
+    $('#z_label').html(presetLabels[2]);
+
+    $('#X_0').spinner('value', causes['X'][0]);
+    $('#X_1').spinner('value', causes['X'][1]);
+    $('#X_2').spinner('value', causes['X'][2]);
+
+    $('#Y_0').spinner('value', causes['Y'][0]);
+    $('#Y_1').spinner('value', causes['Y'][1]);
+    $('#Y_2').spinner('value', causes['Y'][2]);
+
+    $('#Z_0').spinner('value', causes['Z'][0]);
+    $('#Z_1').spinner('value', causes['Z'][1]);
+    $('#Z_2').spinner('value', causes['Z'][2]);
+}
+
 
 
 // --- OU Network Computation --- //
@@ -172,8 +247,31 @@ function ouNetwork() {
 // Compute attractor value 
 function attractor(variabe_name, causes) {
     var coefs = causes[variabe_name];
-    //console.log(coefs);
-    return x*coefs[0] + y*coefs[1] + z*coefs[2];
+    
+    if (variabe_name == 'X') {
+        // Compute x attractor value
+        var x_att = x*(1-Math.abs(x)/100)*coefs[0];
+        // Compute y attractor value
+        var y_att = y*coefs[1];
+        // Compute z attractor value
+        var z_att = z*coefs[2];
+    } else if (variabe_name == 'Y') {
+        // Compute x attractor value
+        var x_att = x*coefs[0];
+        // Compute y attractor value
+        var y_att = y*(1-Math.abs(y)/100)*coefs[1];
+        // Compute z attractor value
+        var z_att = z*coefs[2];
+    } else {
+        // Compute x attractor value
+        var x_att = x*coefs[0];
+        // Compute y attractor value
+        var y_att = y*coefs[1];
+        // Compute z attractor value
+        var z_att = z*(1-Math.abs(z)/100)*coefs[2];
+    }
+    
+    return x_att + y_att + z_att;
 }
 
 // Compute OU for a variable X
@@ -287,7 +385,7 @@ function setupSliders() {
     $('#slider_X').slider({
         create: function() {
             $('#slider_X').slider("value", x);
-            console.log(x);
+            //console.log(x);
             $('#custom-handle-1').text( $('#slider_X').slider( "value" ) );
         },
         slide: function( event, ui ) {
@@ -297,6 +395,12 @@ function setupSliders() {
         change: function(event, ui) {
             $('#custom-handle-1').text( ui.value );
             x = parseInt($('#slider_X').slider("value"));
+        },
+        start: function(event, ui) {
+            xclicked = true
+        },
+        stop: function(event, ui) {
+            xclicked = false
         }
     })
 
@@ -312,8 +416,14 @@ function setupSliders() {
         change: function(event, ui) {
             $('#custom-handle-2').text( ui.value );
             y = parseInt($('#slider_Y').slider("value"));
+        },
+        start: function(event, ui) {
+            yclicked = true
+        },
+        stop: function(event, ui) {
+            yclicked = false
         }
-    })
+    });
 
     $('#slider_Z').slider({
         create: function() {
@@ -327,8 +437,14 @@ function setupSliders() {
         change: function(event, ui) {
             $('#custom-handle-3').text( ui.value );
             z = parseInt($('#slider_Z').slider("value"));
+        },
+        start: function(event, ui) {
+            zclicked = true;
+        },
+        stop: function(event, ui) {
+            zclicked = false;
         }
-    })
+    });
 
     if (display == true) {
         $('#x_label').css('color', xColour);
@@ -347,21 +463,21 @@ function setupSliders() {
     })
 
     // Intervention setup and logic
-    $('#custom-handle-1').mousedown(function() {
-        xclicked = true;
-    })
-    $('#custom-handle-2').mousedown(function() {
-        yclicked = true;
-    })
-    $('#custom-handle-3').mousedown(function() {
-        zclicked = true;
-    })
+    //$('#custom-handle-1').mousedown(function() {
+    //    xclicked = true;
+    //})
+    //$('#custom-handle-2').mousedown(function() {
+    //    yclicked = true;
+    //})
+    //$('#custom-handle-3').mousedown(function() {
+    //    zclicked = true;
+    //})
 
     // Clears the clicked, i.e. toggles off intervention booleans
-    $('body').mouseup(function() {
-        //console.log('I work');
-        xclicked = yclicked = zclicked = false;
-    })
+    //$('body').mouseup(function() {
+    //    //console.log('I work');
+    //    xclicked = yclicked = zclicked = false;
+    //})
 }
 
 

@@ -19,7 +19,9 @@
 	<script src="./js/sliders.js"></script>
 	<!-- Chart.js and plot logic -->
 	<script src='https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js'></script>
-	<!--<script src="./js/progressPlot.js"></script>-->
+	<!--Math display-->
+	<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+	<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 
     <title>Experiment</title>
 
@@ -34,7 +36,6 @@
 	<div class="colleft">
 		<div class="col1">
 		<!-- Column 1 start -->
-
 		<div class='game_display'>
 			<!-- Sliders display -->
 			<div class='slider_container'>
@@ -63,71 +64,95 @@
 				</canvas>
 			</div>
 		</div>
-		
 		<div class='button_container'>
 			<button class='process' id='start_button'>Start</button>
 			<button class='process' id='stop_button'>Pause</button>
 			<button class='process' id='reset_button'>Reset</button>
 		</div>
-
-		<div class='parameter_container'>
-			<div class='spinner_container'>
-				<label for="theta-spinner"><strong>&theta;</strong>: </label>
-				<input id='theta-spinner' class='selector' type='text' value='0.2'/>
-			</div>
+		<div class='ui_option_col1' >
+			<!-- First column of ui options -->
+				<!-- Column 1 end -->
 		</div>
-
-		<div class='flex_table'>
-			<div class='flex_table_row'>
-				<div class='flex_table_head'>Var
+		<div class='ui_option_container'>
+			<div class='ui_option_col2'>
+				<!-- Second column of ui options -->
+				<div class='selector_container'>
+					<div class='preset_container'>
+						<fieldset>
+							<legend> Presets: </legend>
+							<select id='preset_selector' name='presets' class='selector'>
+								<optgroup label='Experiment cases'>
+									<option value="crime">Crime: Crime Rate / Police Action / Population Satisfaction</option>
+									<option value="finance">Finance: Stock Prices / Number of Covid 19 cases / Intensity of confinement measures</option>
+  									<option value="virus">Virus: Number of: Positive tests / Infected people / Negative tests</option>
+								</optgroup>
+								<optgroup label="Math and fun">
+									<option value="sin" selected>FEEDBACK: sin waves</option>
+								</optgroup>
+								<optgroup label='Broken DO NOT SELECT'>
+									<option value="virus-2">CHAIN: Susceptible / Infected / Recovered</option>
+									<option value="bio">LINKED: Heart Rate / Stress / Coffee</option>
+									<option value="poverty">LINKED: Poverty / Mental Health / Drug usage</option>
+									<option value="climate">CHAIN: Industrial activity / Co2 / Atmosphere Temperature</option>
+  									<option value="climate-2">CHAIN: Industrial activity / Air pollution / Confinement</option>
+								</optgroup>
+							</select>
+						</fieldset>
+					</div>
+					<div class='condition_container'>
+						<fieldset>
+							<legend> Condition: </legend>
+							<label for="radio-congruent">Congruent</label>
+							<input name='radio1' id='radio-congruent' class='condition_selector' type='radio'>
+							<label for="radio-incongruent">Incongruent</label>
+							<input name='radio1' id='radio-incongruent' class='condition_selector' type='radio'>
+						</fieldset>
+					</div>
 				</div>
-				<div class='flex_table_head'>X
+				<div class='flex_table'>
+					<div class='flex_table_row'>
+						<div class='flex_table_head'>Variables</div>
+						<div class='flex_table_head'>&lambda;x</div>
+						<div class='flex_table_head'>&lambda;y</div>
+						<div class='flex_table_head'>&lambda;z</div>
+					</div>
+					<div class='flex_table_row'>
+						<div class='flex_table_head'>X attractor: </div>
+						<div class='flex_table_cell'>\</div>
+						<div class='flex_table_cell'><input class='coef_input' type="text" id="X_1" value='0'></div>
+						<div class='flex_table_cell'><input class='coef_input' type="text" id="X_2" value='0'></div>
+						
+					</div>
+					<div class='flex_table_row'>
+						<div class='flex_table_head'>Y attractor: </div>
+						<div class='flex_table_cell'><input class='coef_input' type="text" id="Y_0" value='0'></div>
+						<div class='flex_table_cell'>\</div>
+						<div class='flex_table_cell'><input class='coef_input' type="text" id="Y_2" value='0'></div>
+					</div>
+					<div class='flex_table_row'>
+						<div class='flex_table_head'>Z attractor: </div>
+						<div class='flex_table_cell'><input class='coef_input' type="text" id="Z_0" value='0'></div>
+						<div class='flex_table_cell'><input class='coef_input' type="text" id="Z_1" value='0'></div>
+						<div class='flex_table_cell'>\</div>
+					</div>
 				</div>
-				<div class='flex_table_head'>Y
-				</div>
-				<div class='flex_table_head'>Z
-				</div>
-			</div>
-			<div class='flex_table_row'>
-				<div class='flex_table_head'>X
-				</div>
-				<div class='flex_table_cell'>\
-				</div>
-				<div class='flex_table_cell'><input class='coef_input' type="text" id="X_1" value='0'>
-				</div>
-				<div class='flex_table_cell'><input class='coef_input' type="text" id="X_2" value='0'>
-				</div>
-			</div>
-			<div class='flex_table_row'>
-				<div class='flex_table_head'>Y
-				</div>
-				<div class='flex_table_cell'><input class='coef_input' type="text" id="Y_0" value='0'>
-				</div>
-				<div class='flex_table_cell'>\
-				</div>
-				<div class='flex_table_cell'><input class='coef_input' type="text" id="Y_2" value='0'>
-				</div>
-			</div>
-			<div class='flex_table_row'>
-				<div class='flex_table_head'>Z
-				</div>
-				<div class='flex_table_cell'><input class='coef_input' type="text" id="Z_0" value='0'>
-				</div>
-				<div class='flex_table_cell'><input class='coef_input' type="text" id="Z_1" value='0'>
-				</div>
-				<div class='flex_table_cell'>\
-				</div>
-			</div>
-		</div>
-	
-
-		
-		<!-- Column 1 end -->
-		</div>
-		<div class="col2">
-			<!-- Column 2 start -->
-
 			<!-- Column 2 end -->
+			</div>
+			<div class='ui_option_col3'>
+				<div class='equation_container'>
+					<p> Euler Method Approximation: </p>
+					<p>\[X_{t+1} = X_{t}+{\theta}{\sum_{j=1}^3}{(\lambda_{j}\mu_{j}-X_{t})dt}+{\sigma{dW_t}}\]</p>
+				</div>
+				<div class='parameter_container'>
+					<div class='static_parameter_container'>
+						<p>\[X_{0} = 0, dt = 0.1, \theta =\]</p>
+					</div>
+					<div class='spinner_container'>
+						<label for="theta-spinner"></label>
+						<input id='theta-spinner' class='theta_spinner' type='text' value='0.2'/>
+					</div>
+				</div>
+			</div>
 		</div>
 	</div>
 </div>
