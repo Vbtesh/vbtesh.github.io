@@ -18,7 +18,7 @@ var causes = {
     'Y': [1,1,0],
     'Z': [0,-1,1]
 }
-
+ 
 // Data storage variables
 var xHist = [0];
 var yHist = [0];
