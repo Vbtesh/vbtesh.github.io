@@ -1,191 +1,231 @@
 @font-face {
-    font-family: linowrite;
-    src: url("../fonts/linowrite.ttf");
+  font-family: linowrite;
+  src: url("../fonts/linowrite.ttf");
+}
+@font-face {
+  font-family: bellerose;
+  src: url("../fonts/Bellerose.ttf");
+}
+html, input, button, .ui-slider-handle {
+font-family: 'Fira Mono', 'Ubuntu Mono', monospace;
+}
+
+h1 {
+  font-size: 25px
+}
+h2 {
+  font-size: 20px
+}
+.colleft {
+  margin: 2%;
+}
+
+.game_display {
+  margin: 0%;
+  width: 100%;
+  display: flex;
+  flex-wrap: nowrap;
+  align-content: center;
+  justify-content: center;
+}
+
+.chart_container {
+  padding: 2%;
+  width: 60%;
+  height: 98%;
+  display: flex;
+  flex-wrap: wrap;
+  align-content: center;
+  justify-content: center;
+}
+
+/* Chart.js specific CSS */
+#progressPlot {
+  width: 100%;
+}
+
+
+.slider_container {
+  padding: 2%;
+  padding-left: 0%;
+  width: 40%;
+  display: flex;
+  flex-wrap: wrap;
+  align-content: center;
+  justify-content: center;
+}
+
+/* Slider specific CSS */
+.slider_box_container {
+    width: 60%;
+    height: 80%;
+    display: flex;
   }
-  @font-face {
-    font-family: bellerose;
-    src: url("../fonts/Bellerose.ttf");
+
+  .slider_blank_space {
+    width: 40%;
+    height: 100%;
+    display: flex;
   }
-  html, input, button, .ui-slider-handle {
-  font-family: 'Fira Mono', 'Ubuntu Mono', monospace;
-  }
-  
-  .colleft {
-    margin: 2%;
-  }
-  
-  .game_display {
-    margin: 2%;
+
+/* Slider specific CSS */
+.slider_box {
+  width: 32%;
+  height: 100%;
+  display: flex;
+  flex-wrap: nowrap;
+  align-content: center;
+  justify-content: center;
+}
+
+.slider-label {
+    margin: auto 10% auto 5%;
+}
+
+.slider {
+  height: 100%;
+  margin-top: 80%;
+  align-self: center;
+}
+
+#custom-handle-1, #custom-handle-2, #custom-handle-3 {
+  width: 3em;
+  height: 1.6em;
+  left: -150%;
+  margin-top: -.8em;
+  text-align: center;
+  line-height: 3em;
+}
+
+
+ /* Option containers */
+.ui_option_container {
+  display: flex;
+  width: 100%;
+}
+
+.ui_option_col1 {
+  display: flex;
+  width: 15%;
+  flex-wrap: wrap;
+}
+
+.ui_option_col2 {
+  display: flex;
+  width: 50%;
+  flex-wrap: wrap;
+}
+
+.ui_option_col3 {
+  padding: 3%;
+  display: flex;
+  width: 20%;
+  height: 10%;
+  flex-wrap: wrap;
+}
+
+ /* Button container */
+.button_container {
     width: 100%;
+    height: 20%;
+    margin: 1% 2% 1% 2%;
     display: flex;
     flex-wrap: nowrap;
-    align-content: center;
-    justify-content: center;
-  }
+}
+ button {
+    margin: 3px;
+ }
 
-  .slider_container, .chart_container {
-    padding: 2%;
-    width: 50%;
-    height: 350px;
-    display: flex;
-    flex-wrap: wrap;
-    align-content: center;
-    justify-content: center;
-  }
+/* Parameter container CSS */
+.parameter_container {
+  margin: 1% 5% 1% 2%;
+  width: 100%;
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  justify-content: center;
+}
 
-  /* Slider specific CSS */
-  .slider_box {
-    width: 50%;
-    height: 50%;
-    display: flex;
-    align-content: center;
-    justify-content: center;
-    vertical-align: baseline;
-  }
+label {
+  padding-top: 2px;
+  font-size: 10pt;
+  text-align: right;
+}
 
-  .slider-label {
-      margin: auto 10% auto 5%;
-  }
+input {
+  text-align: center;
+}
 
-  .slider {
-      height: 100%;
-  }
+/* Presets */
+.selector_container {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+}
 
-  #custom-handle-1, #custom-handle-2, #custom-handle-3 {
-    width: 3em;
-    height: 1.6em;
-    left: -150%;
-    margin-top: -.8em;
-    text-align: center;
-    line-height: 1.6em;
-  }
+.preset_container {
+  width: 90%;
+  justify-content: left;
+}
 
-  /* Chart.js specific CSS */
-  #chart {
-      width: 100%;
-      height: 100%;
-  }
+#preset_selector-button {
+  width: 90%;
+}
 
-   /* Option containers */
-  .ui_option_container {
-    display: flex;
-    width: 100%;
-  }
+.overflow { height: 200px; }
 
-  .ui_option_col1 {
-    display: flex;
-    width: 15%;
-    flex-wrap: wrap;
-  }
+.condition_container {
+  width: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: right;
+}
 
-  .ui_option_col2 {
-    display: flex;
-    width: 50%;
-    flex-wrap: wrap;
-  }
-
-   /* Button container */
-  .button_container {
-      width: 100%;
-      height: 20%;
-      margin: 1% 2% 1% 2%;
-      display: flex;
-      flex-wrap: nowrap;
-  }
-   button {
-      margin: 3px;
-   }
- 
-  /* Parameter container CSS */
-  .parameter_container {
+/* Custom flexible table CSS */
+.flex_table {
     margin: 1% 5% 1% 2%;
-    width: 100%;
     display: flex;
-    flex-wrap: nowrap;
-    align-items: center;
-    justify-content: center;
-  }
-
-  label {
-    padding-top: 2px;
-    font-size: 10pt;
-    text-align: right;
-}
-
-  input {
-    text-align: center;
-  }
-
-  /* Presets */
-  .selector_container {
     width: 100%;
-    display: flex;
     flex-wrap: wrap;
-    align-items: center;
-    justify-content: right;
-  }
-
-  .preset_container {
-    width: 90%;
-    justify-content: center;
-  }
-
-  #preset_selector-button {
-    width: 90%;
-  }
-
-  .overflow { height: 200px; }
-
-  .condition_container {
-    width: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: right;
-  }
-
-  /* Custom flexible table CSS */
-  .flex_table {
-      margin: 1% 5% 1% 2%;
-      display: flex;
-      width: 100%;
-      flex-wrap: wrap;
-  }
-
-  .flex_table_row {
-      display: flex;
-      width: 100%;
-      flex-wrap: nowrap;
-      justify-content: center;
-      align-items: center;
-      text-align: center;
-  }
-
-  .flex_table_head {
-      font-weight: bold;
-      background-color: cornflowerblue;
-      border: 1px solid black;
-  }
-
-  .flex_table_cell {
-    justify-content: center;
-    align-items: center;
 }
 
-  .flex_table_cell, .flex_table_head {
+.flex_table_row {
     display: flex;
-      height: 90%;
-      width: 100%;
-      justify-content: center;
-      align-items: center;
-      margin: 1px;
-  }
-
-  .coef_input {
-    display: table-cell;
-    height: 40%;
-    width: 80%;
-    border: none;
-    padding: none;
-    font-size: 10pt;
+    width: 100%;
+    flex-wrap: nowrap;
+    justify-content: center;
+    align-items: center;
     text-align: center;
+}
+
+.flex_table_head {
+    font-weight: bold;
+    background-color: cornflowerblue;
+    border: 1px solid black;
+}
+
+.flex_table_cell {
+  justify-content: center;
+  align-items: center;
+}
+
+.flex_table_cell, .flex_table_head {
+  display: flex;
+    height: 90%;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    margin: 1px;
+}
+
+.coef_input {
+  display: table-cell;
+  height: 40%;
+  width: 80%;
+  border: none;
+  padding: none;
+  font-size: 10pt;
+  text-align: center;
 }

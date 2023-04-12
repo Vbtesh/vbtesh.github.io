@@ -3,7 +3,7 @@
 // Logic variables
 var xclicked = yclicked = zclicked = false;
 var interval;
-var time_step = 100;
+var time_step = 200;
 var x = 0;
 var y = 0;
 var z = 0;
@@ -41,38 +41,237 @@ var yShade = 'rgb(255, 204, 204)';
 var zShade = 'rgb(204, 255, 229)';
 
 var presets = {
-    'sin': [1, 0, 1, 
-            1, 1, 0, 
-            0, -1, 1, 
-            'X', 'Y', 'Z'],
-    'avg_z' : [1, 0, 0,
-                1, 1, 0,
-                1, -1, 1,
-                'X', 'Y', 'Z'],
-    'convergence' : [1, -1, 1,
-               1, 1, -1,
-               -1, 1, 1,
-               'X', 'Y', 'Z'],
-    'flanck' : [1, 0, 0,
-                1, 1, -1,
-                1, -1, 1,
-                'X', 'Y', 'Z'],
+    'sin': [1, 0, 1,
+        1, 1, 0,
+        0, -1, 1,
+        'A', 'B', 'C'
+    ],
+    'no_link': [1, 0, 0,
+        0, 1, 0,
+        0, 0, 1,
+        'A', 'B', 'C'
+    ],
+    'easy_1': [1, 0, 0,
+        1, 1, 0,
+        0, 0, 1,
+        'A', 'B', 'C'
+    ],
+    'easy_2': [1, 0, 0,
+        0, 1, 0,
+        0, -1, 1,
+        'A', 'B', 'C'
+    ],
+    'easy_3': [1, 0, 1,
+        0, 1, 0,
+        0, 0, 1,
+        'A', 'B', 'C'
+    ],
+    'loop_1': [1, 0, 1,
+        1, 1, 0,
+        0, -1, 1,
+        'A', 'B', 'C'
+    ],
+    'loop_2': [1, -1, 0,
+        0, 1, -1,
+        -1, 0, 1,
+        'A', 'B', 'C'
+    ],
+    'loop_3': [1, 0, -1,
+        1, 1, 0,
+        0, 1, 1,
+        'A', 'B', 'C'
+    ],
+    'pos_chain_1': [1, 0, 0,
+        1, 1, 0,
+        0, 1, 1,
+        'A', 'B', 'C'
+    ],
+    'pos_chain_2': [1, -1, 0,
+        0, 1, 0,
+        -1, 0, 1,
+        'A', 'B', 'C'
+    ],
+    'pos_chain_3': [1, 1, 0,
+        0, 1, 1,
+        0, 0, 1,
+        'A', 'B', 'C'
+    ],
+    'dampened_1': [1, 0, 0,
+        1, 1, 0,
+        -0.5, 1, 1,
+        'A', 'B', 'C'
+    ],
+    'dampened_2': [1, -1, 0,
+        0, 1, 0,
+        -1, -0.5, 1,
+        'A', 'B', 'C'
+    ],
+    'dampened_3': [1, 1, 0.5,
+        0, 1, -1,
+        0, 0, 1,
+        'A', 'B', 'C'
+    ],
+    'collider_1': [1, 0, 0,
+        0, 1, 0,
+        -1, -1, 1,
+        'A', 'B', 'C'
+    ],
+    'collider_2': [1, -1, -1,
+        0, 1, 0,
+        0, 0, 1,
+        'A', 'B', 'C'
+    ],
+    'collider_3': [1, 0, 0,
+        1, 1, 1,
+        0, 0, 1,
+        'A', 'B', 'C'
+    ],
+    'ccause_1': [1, 0, 0,
+        1, 1, 0,
+        1, 0, 1,
+        'A', 'B', 'C'
+    ],
+    'ccause_2': [1, 1, 0,
+        0, 1, 0,
+        0, 1, 1,
+        'A', 'B', 'C'
+    ],
+    'ccause_3': [1, 0, 1,
+        0, 1, 1,
+        0, 0, 1,
+        'A', 'B', 'C'
+    ],
+    'confound_1': [1, 0, 0,
+        0.5, 1, -1,
+        -1, 0, 1,
+        'A', 'B', 'C'
+    ],
+    'confound_2': [1, 1, 0,
+        0, 1, 0,
+        1, 0.5, 1,
+        'A', 'B', 'C'
+    ],
+    'confound_3': [1, 0, 1,
+        1, 1, 0.5,
+        0, 0, 1,
+        'A', 'B', 'C'
+    ],
+    'avg_z': [1, 0, 0,
+        1, 1, 0,
+        1, -1, 1,
+        'A', 'B', 'C'
+    ],
+    'convergence': [1, -1, 1,
+        1, 1, -1,
+        -1, 1, 1,
+        'A', 'B', 'C'
+    ],
+    'flanck': [1, 0, 0,
+        1, 1, -1,
+        1, -1, 1,
+        'A', 'B', 'C'
+    ],
     'virus': [1, 0.8, 0.2,
-              0, 1, 0, 
-              0.2, -0.8, 1, 
-              'Positive tests', 'Infected cases', 'Negative tests'],
-    'crime': [1, -1, 0,
-              1, 1, 0, 
-              -0.5, -0.5, 1, 
-              'Crime rate', 'Police action', 'Population satisfaction'],
+        0, 1, 0,
+        0.2, -0.8, 1,
+        'Positive tests', 'Infected cases', 'Negative tests'
+    ],
+    'crime': [
+        [1, -1, 0,
+            1, 1, 0,
+            -0.5, -0.5, 1,
+            'Crime rate', 'Police action', 'Population happiness',
+            'Crime<br>rate', 'Police<br>action', 'Population happiness'
+        ],
+        [1, 0, -1,
+            -0.5, 1, -0.5,
+            1, 0, 1,
+            'Crime rate', 'Population happiness', 'Police action',
+            'Crime<br>rate', 'Population happiness', 'Police<br>action'
+        ],
+        [1, 1, 0,
+            -1, 1, 0,
+            -0.5, -0.5, 1,
+            'Police action', 'Crime rate', 'Population happiness',
+            'Police<br>action', 'Crime<br>rate', 'Population happiness'
+        ],
+        [1, 0, 1,
+            -0.5, 1, -0.5,
+            -1, 0, 1,
+            'Police action', 'Population happiness', 'Crime rate',
+            'Police<br>action', 'Population happiness', 'Crime<br>rate'
+        ],
+        [1, -0.5, -0.5,
+            0, 1, -1,
+            0, 1, 1,
+            'Population happiness', 'Crime rate', 'Police action',
+            'Population happiness', 'Crime<br>rate', 'Police<br>action'
+        ],
+        [1, -0.5, -0.5,
+            0, 1, 1,
+            0, -1, 1,
+            'Population happiness', 'Police action', 'Crime rate',
+            'Population happiness', 'Police<br>action', 'Crime<br>rate'
+        ]
+    ],
+    'crime_control': [
+        [1, -1, 0,
+            1, 1, 0,
+            -0.5, -0.5, 1,
+            'A', 'B', 'C'
+        ],
+        [1, 0, -1,
+            -0.5, 1, -0.5,
+            1, 0, 1,
+            'A', 'B', 'C'
+        ],
+        [1, 1, 0,
+            -1, 1, 0,
+            -0.5, -0.5, 1,
+            'A', 'B', 'C'
+        ],
+        [1, 0, 1,
+            -0.5, 1, -0.5,
+            -1, 0, 1,
+            'A', 'B', 'C'
+        ],
+        [1, -0.5, -0.5,
+            0, 1, -1,
+            0, 1, 1,
+            'A', 'B', 'C'
+        ],
+        [1, -0.5, -0.5,
+            0, 1, 1,
+            0, -1, 1,
+            'A', 'B', 'C'
+        ]
+    ],
     'finance': [1, -0.5, -1,
-                0, 1, -1,
-                -0.5, 1, 1, 
-                'Stock Prices', 'Covid-19 cases', 'Confinement measures'],
+        0, 1, -1,
+        -0.5, 1, 1,
+        'Stock Prices', 'Virus cases', 'Confinement measures'
+    ],
+    'finance_control': [1, -0.5, -1,
+        0, 1, -1,
+        -0.5, 1, 1,
+        'A', 'B', 'C'
+    ],
+    'estate': [1, 1, 1,
+        -0.5, 1, 0.5,
+        -1, -1, 1,
+        'House Prices', 'Population Density', 'Desirability',
+        'House Prices', 'Population Density', 'Desira-<br>bility'
+    ],
+    'estate_control': [1, 1, 1,
+        -0.5, 1, 1,
+        -1, -1, 1,
+        'A', 'B', 'C'
+    ],
     'virus-2': [1, -0.5, -1,
-                0, 1, -1,
-                0.5, 1, 1, 
-                'Stock Prices', 'Covid-19 cases', 'Confinement measures']
+        0, 1, -1,
+        0.5, 1, 1,
+        'Stock Prices', 'Covid-19 cases', 'Confinement measures'
+    ]
 }
 
 // --- Global function run at page load --- //
@@ -81,15 +280,21 @@ $('document').ready(function () {
     // Setup initial slider positions
     setupSliders();
      // Setup chart logic and look
-    setupChart();
+    setupChart(['A', 'B', 'C']);
     // Setup user interface
     setupInterface();
+
+    updateModel('sin')
+
 })
 
 
 // --- Interface setup: Button, parameters and coefficients --- //
 
 function setupInterface() {
+    $('.condition_container').css({
+        'display': 'none'
+    });
 
     // Setup start button to disable coef interface and launch the game.
     // The values update based on the time_step variable (milliseconds)
@@ -116,8 +321,8 @@ function setupInterface() {
                 } else {
                     addData(chart, new_step, [x, y, z, NaN, NaN, NaN]);
                 }
-                // Remove data if too much is plotted here max datapoints is 100
-                if (chart.data.datasets[0].data.length > 200) {
+                // Remove data if too much is plotted here max datapoints is
+                if (chart.data.datasets[0].data.length > 15/dt) {
                     removeData(chart);
                 }
             }
@@ -142,7 +347,7 @@ function setupInterface() {
         $('.condition_selector').checkboxradio( "option", "disabled", false);
         $('#preset_selector').selectmenu( "option", "disabled", false);
         $('.slider').slider("value", 0);
-        setupChart();
+        setupChart(['A', 'B', 'C']);
     })
 
     $('button').button();
@@ -205,21 +410,44 @@ function updateModel(preset) {
     causes['Z'] = presetValues.slice(6, 9);
     var presetLabels = presetValues.slice(9);
 
-    $('#x_label').html(presetLabels[0]);
-    $('#y_label').html(presetLabels[1]);
-    $('#z_label').html(presetLabels[2]);
+    $('#x_label').html('');
+    $('#y_label').html('');
+    $('#z_label').html('');
+
+    $('#custom-handle-1').html(presetLabels[0])
+    $('#custom-handle-2').html(presetLabels[1])
+    $('#custom-handle-3').html(presetLabels[2])
+
 
     $('#X_0').spinner('value', causes['X'][0]);
-    $('#X_1').spinner('value', causes['X'][1]);
-    $('#X_2').spinner('value', causes['X'][2]);
+    $('#X_1').spinner('value', causes['Y'][0]);
+    $('#X_2').spinner('value', causes['Z'][0]);
 
-    $('#Y_0').spinner('value', causes['Y'][0]);
+    $('#Y_0').spinner('value', causes['X'][1]);
     $('#Y_1').spinner('value', causes['Y'][1]);
-    $('#Y_2').spinner('value', causes['Y'][2]);
+    $('#Y_2').spinner('value', causes['Z'][1]);
 
-    $('#Z_0').spinner('value', causes['Z'][0]);
-    $('#Z_1').spinner('value', causes['Z'][1]);
+    $('#Z_0').spinner('value', causes['X'][2]);
+    $('#Z_1').spinner('value', causes['Y'][2]);
     $('#Z_2').spinner('value', causes['Z'][2]);
+
+    setupChart(presetLabels)
+
+    if (presetLabels[1] == 'B') {
+        //console.log('Hello')
+        $('.graph-pred-rec-right').css('visibility', 'hidden');
+        $('#custom-handle-1, #custom-handle-2, #custom-handle-3').css({
+            'line-height': '3em',
+            'font-size': 'smaller'
+        });
+        
+    } else {
+        $('.graph-pred-rec-right').css('visibility', 'visible');
+        $('#custom-handle-1, #custom-handle-2, #custom-handle-3').css({
+            'line-height': '1.5em',
+            'font-size': 'smaller'
+        });
+    }
 }
 
 
@@ -332,7 +560,9 @@ function removeData(chart) {
     chart.update();
 }
 
-function setupChart() {
+function setupChart(labels) {
+    var canvas_html = "<canvas id='progressPlot'></canvas>";
+    $('.chart_container').html(canvas_html);
     var ctx = document.getElementById('progressPlot').getContext('2d');
     chart = new Chart(ctx, {
         // The type of chart we want to create
@@ -342,34 +572,34 @@ function setupChart() {
         data: {
             labels: [0],
             datasets: [{
-                label: 'X',
+                label: labels[0],
                 borderColor: xColour,
                 data: [0],
                 fill: false
             }, {
-                label: 'Y',
+                label: labels[1],
                 borderColor: yColour,
                 data: [0],
-                fill: false, 
+                fill: false,
             }, {
-                label: 'Z',
+                label: labels[2],
                 borderColor: zColour,
                 data: [0],
                 fill: false,
             }, {
-                label: 'X Intervention',
+                label: '',
                 data: [0],
                 borderColor: xShade,
                 backgroundColor: xShade,
                 fill: 'start',
             }, {
-                label: 'Y Intervention',
+                label: '',
                 data: [0],
                 borderColor: yShade,
                 backgroundColor: yShade,
                 fill: 'start',
             }, {
-                label: 'Z Intervention',
+                label: '',
                 data: [0],
                 borderColor: zShade,
                 backgroundColor: zShade,
@@ -382,9 +612,25 @@ function setupChart() {
         // Configuration options go here
         options: {
             elements: {
-                point:{
+                point: {
                     radius: 0
                 }
+            },
+            scales: {
+                yAxes: [{
+                    display: true,
+                    ticks: {
+                        suggestedMin: -100, // minimum will be 0, unless there is a lower value.
+                        suggestedMax: 100,
+                        beginAtZero: false // minimum value will be 0.
+                    }
+                }],
+                xAxes: [{
+                    scaleLabel: {
+                        display: true,
+                        labelString: 'Time (seconds)'
+                    }
+                }]
             }
         }
     });
@@ -398,14 +644,14 @@ function setupSliders() {
         create: function() {
             $('#slider_X').slider("value", x);
             //console.log(x);
-            $('#custom-handle-1').text( $('#slider_X').slider( "value" ) );
+            //$('#custom-handle-1').text( $('#slider_X').slider( "value" ) );
         },
         slide: function( event, ui ) {
-            $('#custom-handle-1').text( ui.value );
+            //$('#custom-handle-1').text( ui.value );
             x = parseInt($('#slider_X').slider("value"));
         },
         change: function(event, ui) {
-            $('#custom-handle-1').text( ui.value );
+            //$('#custom-handle-1').text( ui.value );
             x = parseInt($('#slider_X').slider("value"));
         },
         start: function(event, ui) {
@@ -413,20 +659,21 @@ function setupSliders() {
         },
         stop: function(event, ui) {
             xclicked = false
+            $(':focus').blur()
         }
     })
 
     $('#slider_Y').slider({
         create: function() {
             $('#slider_Y').slider("value", y);
-            $('#custom-handle-2').text( $('#slider_Y').slider( "value" ) );
+            //$('#custom-handle-2').text( $('#slider_Y').slider( "value" ) );
         },
         slide: function( event, ui ) {
-            $('#custom-handle-2').text( ui.value );
+            //$('#custom-handle-2').text( ui.value );
             y = parseInt($('#slider_Y').slider("value"));
         },
         change: function(event, ui) {
-            $('#custom-handle-2').text( ui.value );
+            //$('#custom-handle-2').text( ui.value );
             y = parseInt($('#slider_Y').slider("value"));
         },
         start: function(event, ui) {
@@ -434,20 +681,21 @@ function setupSliders() {
         },
         stop: function(event, ui) {
             yclicked = false
+            $(':focus').blur()
         }
     });
 
     $('#slider_Z').slider({
         create: function() {
             $('#slider_Z').slider("value", z);
-            $('#custom-handle-3').text( $('#slider_Z').slider( "value" ) );
+            //$('#custom-handle-3').text( $('#slider_Z').slider( "value" ) );
         },
         slide: function( event, ui ) {
-            $('#custom-handle-3').text( ui.value );
+            //$('#custom-handle-3').text( ui.value );
             z = parseInt($('#slider_Z').slider("value"));
         },
         change: function(event, ui) {
-            $('#custom-handle-3').text( ui.value );
+            //$('#custom-handle-3').text( ui.value );
             z = parseInt($('#slider_Z').slider("value"));
         },
         start: function(event, ui) {
@@ -455,14 +703,72 @@ function setupSliders() {
         },
         stop: function(event, ui) {
             zclicked = false;
+            $(':focus').blur()
         }
     });
 
+    $('#custom-handle-1, #custom-handle-2, #custom-handle-3').css({
+        'width': '6em',
+        'height': '3em',
+        'left': '-150%',
+        'top': 'auto',
+        'margin-top': '-.8em',
+        'margin-left': '-1em',
+        'margin-bottom': '-1.5em',
+        'text-align': 'center',
+        'line-height': '1.5em',
+        'font-size': 'smaller'
+    });
+
     if (display == true) {
-        $('#x_label').css('color', xColour);
-        $('#y_label').css('color', yColour);
-        $('#z_label').css('color', zColour);
+        $('#x_label').css({
+            'display': 'none',
+            'color': xColour,
+            'font-weight': 'bold',
+            'font-size': 'large'
+        });
+        $('#y_label').css({
+            'display': 'none',
+            'color': yColour,
+            'font-weight': 'bold',
+            'font-size': 'large'
+        });
+        $('#z_label').css({
+            'display': 'none',
+            'color': zColour,
+            'font-weight': 'bold',
+            'font-size': 'large'
+        });
+        $('.X').css({
+            'color': xColour,
+            'font-weight': 'bold',
+            'font-size': 'small'
+        });
+        $('.Y').css({
+            'color': yColour,
+            'font-weight': 'bold',
+            'font-size': 'small'
+        });
+        $('.Z').css({
+            'color': zColour,
+            'font-weight': 'bold',
+            'font-size': 'small'
+        });
     }
+
+    $('#custom-handle-1').css({
+        'background-color': xColour
+    })
+    $('#custom-handle-2').css({
+        'background-color': yColour
+    })
+    $('#custom-handle-3').css({
+        'background-color': zColour
+    })
+
+    $('.c-blue').css('color', xColour);
+    $('.c-red').css('color', yColour);
+    $('.c-green').css('color', zColour);
 
     var $sliders = $('.slider');
     

@@ -30,39 +30,46 @@
 <div id="topbar"></div>
 
 <div id="header">
-	<h1>Sliders Game</h1>
+	<h1>Demo for <em>Less is more: Adaptive strategies in continuous time causal learning </em> (2023)</h1>
+	<h2>Victor J. Btesh, Neil R. Bramley, Maarten Speekenbrink, David A. Lagnado</h2>
 </div>
 <div class="colmask leftmenu">
 	<div class="colleft">
-		<div class="col1">
 		<!-- Column 1 start -->
 		<div class='game_display'>
-			<!-- Sliders display -->
-			<div class='slider_container'>
-				<div class='slider_box' id='slider_container_1'>
-					<label for='slider_X' class='slider-label' id='x_label'>X</label>
-					<div class="slider" id='slider_X'>
-						<div id="custom-handle-1" class="ui-slider-handle"></div>
-					</div>
-				</div>
-				<div class='slider_box' id='slider_container_2'>
-					<label for='slider_Y' class='slider-label' id='y_label'>Y</label>
-					<div class="slider" id='slider_Y'>
-						<div id="custom-handle-2" class="ui-slider-handle"></div>
-					</div>
-				</div>
-				<div class='slider_box' id='slider_container_3'>
-					<label for='slider_Z' class='slider-label' id='z_label'>Z</label>
-					<div class="slider" id='slider_Z'>
-						<div id="custom-handle-3" class="ui-slider-handle"></div>
-					</div>
-				</div>
-			</div>
 			<!-- Chart display -->
 			<div class='chart_container'>
-				<canvas id='progressPlot'>
-				</canvas>
+				<canvas id='progressPlot' style="width:100%;height:100%;"></canvas>
 			</div>
+			<!-- Sliders display -->
+			<div class='slider_container'>
+				<div class='slider_box_container'>
+					<div class='slider_box' id='slider_container_1'>
+						<label for='slider_X' class='slider-label' id='x_label'>X</label>
+						<div class="slider" id='slider_X'>
+							<div id="custom-handle-1" class="ui-slider-handle"></div>
+						</div>
+					</div>
+					<div class='slider_box' id='slider_container_2'>
+						<label for='slider_Y' class='slider-label' id='y_label'>Y</label>
+						<div class="slider" id='slider_Y'>
+							<div id="custom-handle-2" class="ui-slider-handle"></div>
+						</div>
+					</div>
+					<div class='slider_box' id='slider_container_3'>
+						<label for='slider_Z' class='slider-label' id='z_label'>Z</label>
+						<div class="slider" id='slider_Z'>
+							<div id="custom-handle-3" class="ui-slider-handle"></div>
+						</div>
+					</div>
+				</div>
+				<div class="slider_blank_space">
+				</div>
+			</div>
+			
+
+			
+			
 		</div>
 		<div class='button_container'>
 			<button class='process' id='start_button'>Start</button>
@@ -79,26 +86,14 @@
 				<div class='selector_container'>
 					<div class='preset_container'>
 						<fieldset>
-							<legend> Presets: </legend>
+							<legend> Choose your causal model: </legend>
 							<select id='preset_selector' name='presets' class='selector'>
-								<optgroup label='Experiment cases'>
-									<option value="crime">Crime: Crime Rate / Police Action / Population Satisfaction</option>
-									<option value="finance">Finance: Stock Prices / Number of Covid 19 cases / Intensity of confinement measures</option>
-  									<option value="virus">Virus: Number of: Positive tests / Infected people / Negative tests</option>
-								</optgroup>
-								<optgroup label="Fun">
-									<option value="sin" selected>Oscillator, feedback loops: sin waves</option>
-									<option value="convergence">Common attractaction: convergence</option>
-									<option value="flanck">Flancked</option>
-									<option value="avg_z">Average effect on Z</option>
-								</optgroup>
-								<optgroup label='Broken DO NOT SELECT'>
-									<option value="virus-2">CHAIN: Susceptible / Infected / Recovered</option>
-									<option value="bio">Coffee: Heart Rate / Stress / Coffee</option>
-									<option value="health">Health: Exercise / Life Expectancy / Junk Food</option>
-									<option value="poverty">LINKED: Poverty / Mental Health / Drug usage</option>
-									<option value="climate">CHAIN: Industrial activity / Co2 / Atmosphere Temperature</option>
-  									<option value="climate-2">CHAIN: Industrial activity / Air pollution / Confinement</option>
+								<optgroup label='Benchmark graphs'>
+									<option value="sin" selected>Oscillator: feedback loop</option>
+									<option value="pos_chain_1">Causal Chain</option>
+									<option value="dampened_1">Damped Chain</option>
+									<option value="ccause_1">Common Cause</option>
+  									<option value="collider_1">Collider</option>
 								</optgroup>
 							</select>
 						</fieldset>
@@ -115,26 +110,26 @@
 				</div>
 				<div class='flex_table'>
 					<div class='flex_table_row'>
-						<div class='flex_table_head'>Variables</div>
-						<div class='flex_table_head'>&lambda;x</div>
-						<div class='flex_table_head'>&lambda;y</div>
-						<div class='flex_table_head'>&lambda;z</div>
+						<div class='flex_table_head'>Matrix \[\: \Gamma\]</div>
+						<div class='flex_table_head'>\[A\]</div>
+						<div class='flex_table_head'>\[B\]</div>
+						<div class='flex_table_head'>\[C\]</div>
 					</div>
 					<div class='flex_table_row'>
-						<div class='flex_table_head'>X attractor: </div>
+						<div class='flex_table_head'>\[A \rightarrow \] </div>
 						<div class='flex_table_cell'>\</div>
 						<div class='flex_table_cell'><input class='coef_input' type="text" id="X_1" value='0'></div>
 						<div class='flex_table_cell'><input class='coef_input' type="text" id="X_2" value='0'></div>
 						
 					</div>
 					<div class='flex_table_row'>
-						<div class='flex_table_head'>Y attractor: </div>
+						<div class='flex_table_head'>\[B \rightarrow \]</div>
 						<div class='flex_table_cell'><input class='coef_input' type="text" id="Y_0" value='0'></div>
 						<div class='flex_table_cell'>\</div>
 						<div class='flex_table_cell'><input class='coef_input' type="text" id="Y_2" value='0'></div>
 					</div>
 					<div class='flex_table_row'>
-						<div class='flex_table_head'>Z attractor: </div>
+						<div class='flex_table_head'>\[C \rightarrow \] </div>
 						<div class='flex_table_cell'><input class='coef_input' type="text" id="Z_0" value='0'></div>
 						<div class='flex_table_cell'><input class='coef_input' type="text" id="Z_1" value='0'></div>
 						<div class='flex_table_cell'>\</div>
@@ -144,12 +139,12 @@
 			</div>
 			<div class='ui_option_col3'>
 				<div class='equation_container'>
-					<p> Euler Method Approximation: </p>
-					<p>\[X_{t+1} = X_{t}+{\theta}{\sum_{j=1}^3}{(\lambda_{j}\mu_{j}-X_{t})dt}+{\sigma{dW_t}}\]</p>
+					<p> Euler-Maruyama Approximation: </p>
+					<p>\[X_{t+1} = X_{t}+\theta (X_t^\top \Gamma - X_{t})dt+{\sigma{dW_t}}\]</p>
 				</div>
 				<div class='parameter_container'>
 					<div class='static_parameter_container'>
-						<p>\[X_{0} = 0, dt = 0.1, \theta =\]</p>
+						<p>\[dt = 0.2 \qquad \theta =\]</p>
 					</div>
 					<div class='spinner_container'>
 						<label for="theta-spinner"></label>
