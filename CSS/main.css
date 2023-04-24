@@ -7,14 +7,15 @@
     src: url("../fonts/Bellerose.ttf");
 }
 html {
-	font-family: 'Fira Mono', 'Ubuntu Mono', monospace;
+	font-family: Arial, Helvetica, sans-serif;
+	/*font-family: 'Fira Mono', 'Ubuntu Mono', monospace;*/
 }
 
 title {
 	color:rgb(90, 88, 88);
 }
 body {
-    font-family: 'Fira Mono', 'Ubuntu Mono', monospace;
+    font-family: Arial, Helvetica, sans-serif;
 	margin:0;
 	padding:0;
 	border:0;			/* This removes the border around the viewport in old versions of IE */
