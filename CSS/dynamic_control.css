@@ -1,0 +1,281 @@
+@font-face {
+    font-family: linowrite;
+    src: url("../fonts/linowrite.ttf");
+  }
+  @font-face {
+    font-family: bellerose;
+    src: url("../fonts/Bellerose.ttf");
+  }
+  html, input, button, .ui-slider-handle {
+  font-family: 'Fira Mono', 'Ubuntu Mono', monospace;
+  }
+
+  h1 {
+    font-size: 20px
+  }
+  h2 {
+    font-size: 10px
+  }
+
+  p {
+    font-size: 15px;
+  }
+  /* Chart.js specific CSS */
+  #progressPlot {
+      width: 100%;
+  }
+
+  /* Slider and chart container for experiment page */
+  .game-display {
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: stretch;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .upper-band {
+    padding: 0%;
+    display: flex;
+    flex-wrap: nowrap;
+    height: 35%;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .lower-band {
+    padding: 0%;
+    display: flex;
+    flex-wrap: nowrap;
+    height: 35%;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+  }
+
+  /* Button container */
+   .button_band {
+    width: 40%;
+    height: 5%;
+    display: flex;
+    flex-flow: column;
+    flex-wrap: nowrap;
+    justify-content: flex-end;
+    align-content: flex-end;
+}
+
+.ui-options-band {
+    display: flex;
+    flex-wrap: nowrap;
+    height: 25%;
+  }
+
+ .val-link-button {
+   height: 7%;
+   width: 100%;
+   display: flex;
+   justify-content: flex-end;
+ }
+
+ #start_button {
+   align-self: flex-end;
+ }
+
+ button {
+    margin: 3px;
+    justify-content: center;
+ }
+
+  /* Slider specific CSS */
+  .slider_box_container {
+    padding: 0%;
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+    height: 100%;
+    justify-content: center;
+    align-content: center;
+  }
+
+
+  .slider_box {
+    width: 20%;
+    height: 100%;
+    display: flex;
+    flex-wrap: nowrap;
+    align-content: center;
+    justify-content: center;
+  }
+
+  .slider-label {
+      margin: auto 10% auto 5%;
+  }
+
+  .slider {
+      height: 75%;
+      align-self: center;
+  }
+
+  .feedback-container {
+    width: 55%;
+    height: 90%;
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  .feedback-slider-container {
+    width: 100%;
+    height: 15%;
+    display: flex;
+    align-items: center;
+    border-top: 1px dotted black;
+    margin-bottom: 0.2%;
+    margin-top: 0.2%;
+    margin-right: 5%;
+  }
+
+  .feedback-slider {
+    width: 120px;
+    margin-left:2%;
+  }
+
+  .label-fb {
+    height: 50%;
+    width: 90%;
+  }
+
+  .fb-p {
+    font-size: smaller;
+  }
+
+  .ui-checkboxradio-label{
+    margin-top: 1%;
+  }
+
+  #reason-qual {
+    height: 80%;
+    width: 98%;
+    align-self: center;
+  }
+
+  #tech-fb {
+    width: 100%;
+    align-self: center;
+  }
+
+   /* Option containers */
+
+  /* Parameter container CSS */
+  .parameters-container {
+    display: flex;
+    width: 20%;
+    flex-wrap: wrap;
+  }
+  .parameter-selector{
+    width: 100%;
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+    justify-content: center;
+  }
+
+  label {
+    padding-top: 2px;
+    font-size: 10pt;
+    text-align: right;
+}
+
+  input {
+    text-align: center;
+  }
+
+  /* Presets */
+  .selector-container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    width: 33%;
+    justify-content: center;
+  }
+
+  .variable-selector {
+    width:25%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  #action-variable-selector-button {
+    width: 2em;
+  }
+
+  #target-variable-selector-button {
+    width: 2em;
+  }
+
+  .variable-legend {
+    font-size: small;
+  }
+
+  #preset-selector-button {
+    width: 90%;
+  }
+
+  .overflow { height: 200px; }
+
+  .condition_container {
+    width: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: right;
+  }
+
+  /* Custom flexible table CSS */
+  .flex_table {
+      margin: 1% 1% 1% 1%;
+      display: flex;
+      width: 33%;
+      height: 100%;
+      flex-wrap: wrap;
+  }
+
+  .flex_table_row {
+      display: flex;
+      height: 25%;
+      width: 100%;
+      flex-wrap: nowrap;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+  }
+
+  .flex_table_head {
+      font-weight: bold;
+      background-color: cornflowerblue;
+      border: 1px solid black;
+  }
+
+  .flex_table_cell {
+    justify-content: center;
+    align-items: center;
+}
+
+  .flex_table_cell, .flex_table_head {
+    display: flex;
+      height: 100%;
+      width: 100%;
+      justify-content: center;
+      align-items: center;
+      margin: 1px;
+  }
+
+  .coef_input {
+    display: table-cell;
+    height: 40%;
+    width: 80%;
+    border: none;
+    padding: none;
+    font-size: 10pt;
+    text-align: center;
+}
