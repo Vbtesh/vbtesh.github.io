@@ -1,10 +1,10 @@
 // --- Global variables --- //
 // Ou Network computation variables
-var graph;
-var attratorType = 'random-walk';
+var defaultGraph = 'chain_two_ends_5';
+var attratorType = 'flexible';
 var dt = 0.2;
-var timeStep = 0.2 * 1000;
-var theta = 0.8;
+var timeStep = dt * 1000;
+var theta = 0.5;
 var sigma = 3;
 
 var selfAttractors = {
@@ -23,13 +23,14 @@ var selfAttractors = {
 }
 // Data variables
 var maxVars = 6;
-var numVars = 6;
+var numVars = presets[defaultGraph]['num'];
+var fullCausalGraph = presets[defaultGraph]['graph'];
+var causalGraph = setEffectiveGraph(fullCausalGraph, numVars);
+var currentLabels = new Array(numVars).fill('');
+
 var variablesValues = [new Array(numVars).fill(0)];
 var currentValues = variablesValues[0]
 var variablesInterventions = [new Array(numVars).fill(0)];
-var fullCausalGraph = eye(maxVars);
-var causalGraph = eye(numVars);
-var currentLabels = new Array(numVars).fill('');
 var letterIdxMap = {
     'A': 0,
     'B': 1,
@@ -50,10 +51,11 @@ var midTrial = endTrial * 2; //Math.floor(endTrial / 2); // Time at which partic
 var countStep = 0;
 var displayLabels = 'flex' //'none';
 var playing = false;
+
 // Control Success Variables
-var actionVariable = 0;
+var actionVariable = presets[defaultGraph]['control'];
+var targetVariable = presets[defaultGraph]['target'];
 var rewardRange = [40, 80];
-var targetVariable = 5;
 var wasInRange = false;
 var inRewardRange = false;
 var rewardColor = 'rgb(14, 227, 95)';
@@ -107,6 +109,8 @@ window.addEventListener('DOMContentLoaded', (event) => {
     resizeCanvas();
     setupSliders();
     setupInterface();
+
+    adjustVarNumber()
     graphSetUp(causalGraph, actionVariable, targetVariable);
     setRewardArea(targetVariable, rewardRange)
 });
@@ -283,7 +287,7 @@ function startGame() {
             wasInRange = false;
         }
         inRewardRange = isInRewardRange(currentValues, targetVariable, rewardRange)
-        console.log(wasInRange, inRewardRange, rewardRange)
+        //console.log(wasInRange, inRewardRange, rewardRange)
         if (inRewardRange == true) {
             $('#reward-counter-up').html(parseInt($('#reward-counter-up').html()) + 1)
             $('#reward-counter-handle').html(parseInt($('#reward-counter-handle').html()) + 1)
@@ -367,11 +371,11 @@ function ouNetworkUpdate(values) {
             newValues[varIdx] = null
             return
         }
-        var oldValue = parseInt($slider.slider('value'));
+        var oldValue = parseFloat($slider.slider('value'));
         if (varClicked[varIdx] == true) {
             var newValue = oldValue;
         } else {
-            var localAttractor = computeAttractor(varIdx, values, causalGraph);
+            var localAttractor = computeAttractor(varIdx, values);
             var newValue = oldValue + ouIncrement(oldValue, sigma, dt, theta, localAttractor);
         }
         if (newValue > 100) {
@@ -387,15 +391,14 @@ function ouNetworkUpdate(values) {
 
 // Compute attractor value 
 // Called in sliders.ouNetworkUpdate
-function computeAttractor(varIdx, values, causes) {
-    var coefs = causes[varIdx]
+function computeAttractor(varIdx, values) {
     var attractor = 0;
     var contrib;
     for (i=0; i<numVars; i++) {
         if (i == varIdx) {
-            contrib = values[i] * coefs[i] * selfAttractors[attratorType](values[i])
+            contrib = values[i] * causalGraph[i][varIdx] * selfAttractors[attratorType](values[i])
         } else {
-            contrib = values[i] * coefs[i]
+            contrib = values[i] * causalGraph[i][varIdx]
         }
         attractor = attractor + contrib
     }
@@ -464,6 +467,7 @@ function setEffectiveGraph(fullGraph, numVar) {
     for (i=0; i<numVar; i++) {
         for (j=0; j<numVar; j++) {
             effectiveGraph[i][j] = fullGraph[i][j]
+            $(`#${i}_${j}`).spinner('value', fullCausalGraph[i][j]);
         }
     }
 
@@ -839,12 +843,21 @@ function setupInterface() {
 
     // Setup of preset selector
     $( ".selector" ).selectmenu({
-        appendTo: ".selector_container",
         select: function(event, ui) {
-            console.log(ui.item.value)
-            updateModel(ui.item.value);
+            
+            targetVariable = presets[ui.item.value]['target']
+            actionVariable = presets[ui.item.value]['control']
+            numVars = presets[ui.item.value]['num']
+            fullCausalGraph = presets[ui.item.value]['graph']
+            
+            adjustVarNumber()
+            causalGraph = setEffectiveGraph(fullCausalGraph, numVars)
+            console.log(causalGraph)
+            graphSetUp(causalGraph, actionVariable, targetVariable)
         }
     }).selectmenu( "menuWidget" ).addClass( "overflow" );
+    $('#preset-selector').val(defaultGraph);
+    $("#preset-selector").selectmenu("refresh");
 
     // Setup of radio
     $('input[type="radio"]').checkboxradio();
@@ -940,6 +953,7 @@ function setupInterface() {
                     graphSetUp(causalGraph, actionVariable, targetVariable)
                     
                 } else {
+                    console.log('error')
                     $coef.spinner('value', fullCausalGraph[causeIdx][effectIdx]);
                 }
             }

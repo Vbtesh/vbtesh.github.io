@@ -18,6 +18,7 @@
 	<script src='./js/jquery.ui/jquery-ui.min.js'></script>
     <script src="./js/math.js"></script>
     <script src="./js/utilities.js"></script>
+    <script src="./js/control_presets.js"></script>
     <script src="./js/dynamic_control.js"></script>
 	
 
@@ -27,14 +28,14 @@
 	<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
 	<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 
-    <title>Less Is More</title>
+    <title>Dynamic Control</title>
 
 </head>
 <body>
 <div id="topbar"></div>
 
 <div id="header">
-    <h1>Demo for <em>Less is more: Adaptive strategies in continuous time causal learning </em> (2023)</h1>
+    <h1>Demo for <em>Dynamic Control</h1>
     <!-- 
     <h2>Victor J. Btesh, Neil R. Bramley, Maarten Speekenbrink, David A. Lagnado</h2>
     -->
@@ -95,17 +96,44 @@
     </div>			
 	
     <div class='button-band'>
-    	<button class='process' id='start_button'>Start</button>
-    	<button class='process' id='stop_button'>Pause</button>
-    	<button class='process' id='reset_button'>Reset</button>
-        <span id="reward-counter-up" class="reward-counter">0</span>
+        <fieldset class="variable-selector">
+            <legend class="variable-legend">Commands </legend>
+    	    <button class='process' id='start_button'>Start</button>
+    	    <button class='process' id='stop_button'>Pause</button>
+    	    <button class='process' id='reset_button'>Reset</button>
+            <span id="reward-counter-up" class="reward-counter">0</span>
+        </fieldset>
+        <fieldset style="width: 30%;">
+            <legend class="variable-legend" > Choose your causal model</legend>
+            <select id='preset-selector' name='presets' class='selector'>
+                <optgroup label='3 variables'>
+                    <option value="chain_3">Causal Chain (3)</option>
+                    <option value="damped_3">Damped Chain (3)</option>
+                      <option value="collider_3">Collider (3)</option>
+                    <option value="feedbackloop_3">Feedback Loop (3)</option>
+                </optgroup>
+                <optgroup label='4 variables'>
+                    <option value="chain_4">Causal Chain (4)</option>
+                    <option value="damped_4">Damped Chain (4)</option>
+                    <option value="feedbackloop_4">Feedback Loop (4)</option>
+                </optgroup>
+                <optgroup label='5 variables'>
+                    <option value="chain_5">Causal Chain (5)</option>
+                    <option value="chain_two_ends_5">Causal Chain with two ends (5)</option>
+                    <option value="feedbackloop_5">Feedback Loop (5)</option>
+                </optgroup>
+                <optgroup label='6 variables'>
+                    <option value="chain_6">Causal Chain (6)</option>
+                </optgroup>
+            </select>
+        </fieldset>
     </div>
 	<div class='ui-options-band'>
 		
 		<!-- Preset options -->
 		<div class='selector-container'>
-            <fieldset>
-                <legend class="variable-legend"> Attractor type: </legend>
+            <fieldset class="variable-selector" style="width: 70%;">
+                <legend class="variable-legend"> Attractor type </legend>
                 <label for="radio-random-walk">None</label>
                 <input name='radio1' id='radio-random-walk' type='radio'>
                 <label for="radio-zero">Zero</label>
@@ -118,10 +146,22 @@
                 -->
             </fieldset>
 
-            <fieldset style="width:70%;">
-                <legend class="variable-legend"> <p>Reward range [<span id="range-low">40</span>, <span id="range-high">30</span>]:</p> </legend>
+            <fieldset class="variable-selector" style="width:60%;">
+                <legend class="variable-legend"> <p>Reward range [<span id="range-low">40</span>, <span id="range-high">30</span>]</p> </legend>
                 <div id="slider-reward-range" style="width:100%;"></div>
             </fieldset>
+
+            <fieldset class="variable-selector">
+				<legend class="variable-legend"> Target variable </legend>
+				<select id='target-variable-selector'>
+					<option value="A">A</option>
+					<option value="B">B</option>
+					<option value="C" selected>C</option>
+					<option value="D">D</option>
+  					<option value="E">E</option>
+                    <option value="F">F</option>
+				</select>
+			</fieldset>
 
 			<fieldset class="variable-selector">
 				<legend class="variable-legend"> Number of variables </legend>
@@ -138,39 +178,7 @@
                     <option value="F">F</option>
 				</select>
 			</fieldset>
-            <fieldset class="variable-selector">
-				<legend class="variable-legend"> Target variable </legend>
-				<select id='target-variable-selector'>
-					<option value="A">A</option>
-					<option value="B">B</option>
-					<option value="C" selected>C</option>
-					<option value="D">D</option>
-  					<option value="E">E</option>
-                    <option value="F">F</option>
-				</select>
-			</fieldset>
-            <fieldset>
-				<legend class="variable-legend"> Choose your causal model: </legend>
-				<select id='preset-selector' name='presets' class='selector'>
-					<optgroup label='3 variables'>
-						<option value="sin" selected>Oscillator: feedback loop</option>
-						<option value="pos_chain_1">Causal Chain</option>
-						<option value="dampened_1">Damped Chain</option>
-						<option value="ccause_1">Common Cause</option>
-  						<option value="collider_1">Collider</option>
-					</optgroup>
-                    <optgroup label='4 variables'>
-						<option value="pos_chain_4">Causal Chain</option>
-					</optgroup>
-                    <optgroup label='5 variables'>
-						<option value="pos_chain_5">Causal Chain</option>
-					</optgroup>
-                    <optgroup label='6 variables'>
-						<option value="pos_chain_6">Causal Chain</option>
-					</optgroup>
-				</select>
-			</fieldset>
-		</div>
+        </div>
 
         <!-- Equation and parameter selection -->
         <div class='parameters-container'>
@@ -194,6 +202,7 @@
 				<p> Euler-Maruyama Approximation: </p>
 				<p>\[X_{t+1} = X_{t}+\theta (X_t^\top \Gamma - X_{t})dt+{\sigma{dW_t}}\]</p>
 			</div>
+		
 		</div>
 
 
@@ -260,7 +269,7 @@
 				<div class='flex_table_cell row-6 col-2'><input class='coef_input' type="text" id="5_1" value='0'></div>
                 <div class='flex_table_cell row-6 col-3'><input class='coef_input' type="text" id="5_2" value='0'></div>
                 <div class='flex_table_cell row-6 col-4'><input class='coef_input' type="text" id="5_3" value='0'></div>
-                <div class='flex_table_cell row-6 col-5'><input class='coef_input' type="text" id="5_3" value='0'></div>
+                <div class='flex_table_cell row-6 col-5'><input class='coef_input' type="text" id="5_4" value='0'></div>
                 <div class='flex_table_cell row-6 col-6'>\</div>
 			</div>
 		</div>
