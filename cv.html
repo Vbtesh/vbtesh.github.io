@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Victor Btesh - Academic CV</title>
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <style>
+    :root {
+      --ink: #1b1b1b;
+      --muted: #3f3f3f;
+      --rule: #8b8b8b;
+      --paper: #ffffff;
+      --bg: #efefef;
+      --link: #1f4d7a;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      color: var(--ink);
+      background: var(--bg);
+      font-family: "Times New Roman", Times, serif;
+      line-height: 1.33;
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+    }
+
+    .toolbar {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      padding: 10px;
+      border-bottom: 1px solid #d7d7d7;
+      background: rgba(255, 255, 255, 0.95);
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    .btn {
+      border: 1px solid #707070;
+      background: #ffffff;
+      color: #1f1f1f;
+      padding: 7px 11px;
+      border-radius: 2px;
+      text-decoration: none;
+      font-size: 13px;
+      cursor: pointer;
+    }
+
+    .btn:hover {
+      background: #202020;
+      color: #ffffff;
+    }
+
+    .page {
+      width: min(1120px, 94vw);
+      margin: 14px auto 24px auto;
+      background: var(--paper);
+      padding: 44px 58px;
+      box-shadow: 0 8px 28px rgba(0, 0, 0, 0.12);
+    }
+
+    #cv h1 {
+      margin: 0;
+      text-align: center;
+      letter-spacing: 0.04em;
+      font-weight: 700;
+      font-size: 3rem;
+    }
+
+    #cv > p:first-of-type,
+    #cv > p:nth-of-type(2) {
+      text-align: center;
+      font-size: 1.05rem;
+      color: var(--muted);
+      margin: 0.3rem 0;
+    }
+
+    #cv h2 {
+      margin-top: 1.45rem;
+      margin-bottom: 0.7rem;
+      padding-bottom: 0.12rem;
+      border-bottom: 2px solid var(--rule);
+      font-size: 1.05rem;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+      text-transform: uppercase;
+      break-after: avoid;
+    }
+
+    #cv h3 {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      margin: 0.8rem 0 0.15rem 0;
+      font-size: 0.86rem;
+      font-weight: 700;
+      break-after: avoid;
+    }
+
+    #cv h3 .entry-title {
+      flex: 1;
+      min-width: 0;
+    }
+
+    #cv h3 .entry-date {
+      white-space: nowrap;
+      font-style: italic;
+      font-weight: 400;
+      color: var(--muted);
+    }
+
+    #cv p,
+    #cv li {
+      font-size: 0.82rem;
+      margin: 0.24rem 0;
+    }
+
+    #cv ul {
+      margin-top: 0.2rem;
+      margin-bottom: 0.7rem;
+      padding-left: 1.3rem;
+    }
+
+    #cv a {
+      color: var(--link);
+      text-decoration: none;
+      border-bottom: 1px dotted var(--link);
+    }
+
+    #cv a:hover {
+      color: #ffffff;
+      background: var(--link);
+      border-bottom-color: var(--link);
+    }
+
+    .error {
+      border: 1px solid #8f2e2e;
+      background: #fff1f1;
+      color: #7c1919;
+      padding: 9px;
+    }
+
+    @page {
+      size: A4;
+      margin: 12mm;
+    }
+
+    @media print {
+      body {
+        background: #ffffff;
+      }
+
+      .toolbar {
+        display: none;
+      }
+
+      .page {
+        width: 100%;
+        margin: 0;
+        padding: 0;
+        box-shadow: none;
+      }
+
+      #cv a {
+        color: var(--ink);
+        border-bottom: none;
+      }
+    }
+
+    @media (max-width: 900px) {
+      .page {
+        padding: 22px;
+      }
+
+      #cv h1 {
+        font-size: 2.3rem;
+      }
+
+      #cv h2 {
+        font-size: 1.05rem;
+      }
+
+      #cv h3 {
+        display: block;
+        font-size: 0.95rem;
+      }
+
+      #cv h3 .entry-date {
+        display: block;
+        margin-top: 0.1rem;
+      }
+
+      #cv p,
+      #cv li {
+        font-size: 0.9rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="toolbar">
+    <a class="btn" href="./index.html">Home</a>
+    <a class="btn" href="./cv.md" download>Download Markdown</a>
+    <button class="btn" id="printBtn" type="button">Print to PDF</button>
+  </div>
+
+  <main class="page">
+    <article id="cv" aria-live="polite"></article>
+  </main>
+
+  <script>
+    function applyEntryDateLayout(container) {
+      const headings = container.querySelectorAll("h3");
+      headings.forEach((heading) => {
+        const text = heading.textContent || "";
+        if (!text.includes("|")) {
+          return;
+        }
+        const pieces = text.split("|");
+        if (pieces.length < 2) {
+          return;
+        }
+        const title = pieces[0].trim();
+        const date = pieces.slice(1).join("|").trim();
+        heading.innerHTML = "";
+
+        const titleSpan = document.createElement("span");
+        titleSpan.className = "entry-title";
+        titleSpan.textContent = title;
+
+        const dateSpan = document.createElement("span");
+        dateSpan.className = "entry-date";
+        dateSpan.textContent = date;
+
+        heading.appendChild(titleSpan);
+        heading.appendChild(dateSpan);
+      });
+    }
+
+    async function renderCv() {
+      const container = document.getElementById("cv");
+      try {
+        const response = await fetch("./cv.md", { cache: "no-store" });
+        if (!response.ok) {
+          throw new Error("Unable to load cv.md");
+        }
+
+        const markdown = await response.text();
+        container.innerHTML = marked.parse(markdown);
+        applyEntryDateLayout(container);
+      } catch (error) {
+        container.innerHTML = '<p class="error">Could not load cv.md. Ensure the file exists next to cv.html.</p>';
+      }
+    }
+
+    document.getElementById("printBtn").addEventListener("click", () => {
+      window.print();
+    });
+
+    renderCv();
+  </script>
+</body>
+</html>
