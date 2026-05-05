@@ -7,7 +7,7 @@ Last updated: 05-05-2026
 ## RESEARCH INTEREST
 
 ### Computational social cognition
-Signaling, Theory of mind, Inverse Planning
+Status and hierarchy, Social motivations, Relationships, Inverse planning, Theory of Mind
 
 ### Causal cognition
 Causal structure learning, Controlling dynamical systems
