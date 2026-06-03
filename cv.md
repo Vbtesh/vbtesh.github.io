@@ -35,7 +35,7 @@ Psychology Department, University of Edinburgh
 
 Field: Computational social cognition
 
-Topic: [TBD]
+Topic: Towards a computational theory of social construction.
 
 Supervisors: Prof. David Lagnado and Prof. Maarten Speekenbrink.
 
