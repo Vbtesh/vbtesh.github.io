@@ -1,4 +1,4 @@
-# VICTOR BTESH
+# Victor Btesh
 
 vbtesh9@gmail.com | [Website](https://vbtesh.github.io) | [GitHub](https://github.com/Vbtesh) | [Google Scholar](https://scholar.google.com/citations?user=Zl8n9jEAAAAJ&hl=en)
 
