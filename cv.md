@@ -17,10 +17,10 @@ Computational modeling, Bayesian methods, reinforcement learning.
 
 ## RESEARCH POSITIONS AND AFFILIATIONS
 
-### Visiting Researcher | April - May 2025
+### Visiting Researcher, Rehder and Computation and Decision Making Lab | February - April 2025
 Department of Psychology, New York University
 
-### Visiting Researcher at the Causality in Cognition Lab | March - April 2025
+### Research collaboration, Causality in Cognition Lab, Stanford University (unpaid, concurrent with NYU appointment) | February 2025
 Psychology Department, Stanford University
 
 ### Enrichment Scholar | 2023 - 2024
@@ -63,11 +63,11 @@ Thesis advisor: Dr. Amanda Schantz.
 
 ## PUBLICATIONS
 
-Btesh, V., Wu S., & Gerstenberg, T. (2026). Action understanding with Presentational Goals. Proceedings of the Annual Meeting of the Cognitive Science Society, 48
+Btesh, V., Wu S., & Gerstenberg, T. (in press). Action understanding with Presentational Goals. Proceedings of the Annual Meeting of the Cognitive Science Society, 48
 
-Btesh, V. & Ho M. (2026). Let's be friends! People work together even when there is no incentive to do so. Proceedings of the Annual Meeting of the Cognitive Science Society, 48
+Btesh, V. & Ho M. (in press). Let's be friends! People work together even when there is no incentive to do so. Proceedings of the Annual Meeting of the Cognitive Science Society, 48
 
-Horner, M., Btesh, V., Moore A., & Quillien, T. (2026). When giving more makes you look worse: paradoxical inferences in a Bayesian model of social evaluation. Proceedings of the Annual Meeting of the Cognitive Science Society, 48
+Horner, M., Btesh, V., Moore A., & Quillien, T. (in press). When giving more makes you look worse: paradoxical inferences in a Bayesian model of social evaluation. Proceedings of the Annual Meeting of the Cognitive Science Society, 48
 
 Btesh, V., Lagnado, D., & Gerstenberg, T. (2025). Taking others for granted: balancing personal and presentational goals in action selection. Proceedings of the Annual Meeting of the Cognitive Science Society, 47 [See online](https://escholarship.org/uc/item/23d145sd)
 
