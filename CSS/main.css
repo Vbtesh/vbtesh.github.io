@@ -292,6 +292,104 @@ legend {
 .post ul {
     text-align: justify;
 }
+/* Publication list styles */
+.pubs {
+	max-width: 48em;
+}
+.pubs h2 {
+	font-size: 1rem;
+	font-weight: bold;
+	text-transform: uppercase;
+	letter-spacing: .09em;
+	color: rgb(90, 88, 88);
+	margin: 2em 0 .9em 0;
+	padding: 0 0 .35em 0;
+	border-bottom: 1px solid rgb(75, 155, 177);
+}
+.pubs h2:first-child {
+	margin-top: .6em;
+}
+.pub-list {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
+.pub {
+	position: relative;
+	margin: 0 0 1.2em 0;
+	padding: 0 0 0 .9em;
+}
+.pub::before {
+	content: "";
+	position: absolute;
+	left: 0;
+	top: .35em;
+	bottom: .25em;
+	width: 2px;
+	background: rgba(75, 155, 177, .3);
+}
+.pub:hover::before {
+	background: rgb(75, 155, 177);
+}
+.pub-title {
+	font-size: 1rem;
+	font-weight: bold;
+	line-height: 1.35;
+	margin: 0;
+	padding: 0;
+	color: rgb(60, 58, 58);
+}
+.pub-authors,
+.pub-meta {
+	margin: .1em 0 0 0;
+	line-height: 1.4;
+}
+.pub-authors {
+	font-size: .92em;
+	color: rgb(90, 88, 88);
+}
+.pub-meta {
+	font-size: .88em;
+	color: rgb(120, 118, 118);
+}
+/* keep link boxes from resizing text on hover */
+.pub a,
+.pub a:hover {
+	border: none;
+	background: none;
+}
+.pub-title a {
+	color: rgb(60, 58, 58);
+}
+.pub-title a:hover,
+.pub-authors a:hover {
+	color: rgb(75, 155, 177);
+	text-decoration: underline;
+}
+.pub-links {
+	display: inline;
+	margin: 0;
+	padding: 0;
+}
+.pub-links a,
+.pub-links a:hover {
+	display: inline-block;
+	font-size: .82em;
+	line-height: 1.3;
+	margin: .25em .25em 0 0;
+	padding: 1px 7px;
+	border: 1px solid rgb(75, 155, 177);
+	border-radius: 3px;
+}
+.pub-links a {
+	color: rgb(75, 155, 177);
+	background: none;
+}
+.pub-links a:hover {
+	color: white;
+	background: rgb(75, 155, 177);
+	text-decoration: none;
+}
 /* Footer styles */
 #footer {
 	clear:both;
